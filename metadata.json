@@ -1,0 +1,8 @@
+{
+  "name": "Remix Panel I+D+i Proyectos y desarrollos Viena Capellanes",
+  "description": "Sistema integral de gestión de proyectos, solicitudes, formulaciones, ensayos técnicos, control de horas y documentación para departamentos de I+D+i de pastelería.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

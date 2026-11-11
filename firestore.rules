@@ -1,0 +1,103 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && (request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'google.com');
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Health check endpoint for testing connection
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Solicitudes
+    match /solicitudes/{solicitudId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(solicitudId)
+        && request.resource.data.id is string
+        && request.resource.data.nombreSolicitud is string
+        && request.resource.data.nombreSolicitud.size() <= 256;
+      allow update: if isVerified() && isValidId(solicitudId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(solicitudId);
+    }
+
+    // Proyectos
+    match /proyectos/{proyectoId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(proyectoId)
+        && request.resource.data.id is string
+        && request.resource.data.nombre is string
+        && request.resource.data.nombre.size() <= 256;
+      allow update: if isVerified() && isValidId(proyectoId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(proyectoId);
+    }
+
+    // Pruebas y Ensayos
+    match /pruebas/{pruebaId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(pruebaId)
+        && request.resource.data.id is string
+        && request.resource.data.proyectoId is string;
+      allow update: if isVerified() && isValidId(pruebaId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(pruebaId);
+    }
+
+    // Registros de Horas
+    match /registrosHoras/{registroId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(registroId)
+        && request.resource.data.id is string
+        && request.resource.data.proyectoId is string;
+      allow update: if isVerified() && isValidId(registroId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(registroId);
+    }
+
+    // Documentos
+    match /documentos/{documentoId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(documentoId)
+        && request.resource.data.id is string
+        && request.resource.data.nombre is string;
+      allow update: if isVerified() && isValidId(documentoId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(documentoId);
+    }
+
+    // Empleados
+    match /empleados/{empleadoId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(empleadoId)
+        && request.resource.data.id is string
+        && request.resource.data.nombre is string;
+      allow update: if isVerified() && isValidId(empleadoId)
+        && request.resource.data.id == resource.data.id;
+      allow delete: if isVerified() && isValidId(empleadoId);
+    }
+
+    // Auditoria
+    match /auditoria/{auditoriaId} {
+      allow read: if isSignedIn();
+      allow create: if isVerified() && isValidId(auditoriaId)
+        && request.resource.data.id is string;
+      allow update, delete: if false; // Logs de auditoria son inmutables
+    }
+  }
+}

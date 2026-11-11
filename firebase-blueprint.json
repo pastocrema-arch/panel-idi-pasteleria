@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "Solicitud": {
+      "title": "Solicitud",
+      "description": "Solicitud de nuevo desarrollo o cambio de formulación para I+D+i",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "codigo": { "type": "string", "maxLength": 64 },
+        "fechaSolicitud": { "type": "string", "maxLength": 32 },
+        "solicitante": { "type": "string", "maxLength": 128 },
+        "departamentoSolicitante": { "type": "string", "maxLength": 64 },
+        "nombreSolicitud": { "type": "string", "maxLength": 256 },
+        "descripcion": { "type": "string", "maxLength": 4000 },
+        "familia": { "type": "string", "maxLength": 64 },
+        "tipoTrabajo": { "type": "string", "maxLength": 64 },
+        "cliente": { "type": "string", "maxLength": 128 },
+        "fechaEntregaDeseada": { "type": "string", "maxLength": 32 },
+        "prioridad": { "type": "string", "maxLength": 32 },
+        "estado": { "type": "string", "maxLength": 64 },
+        "responsableEvaluacion": { "type": "string", "maxLength": 128 },
+        "fechaAceptacion": { "type": "string", "maxLength": 32 },
+        "observaciones": { "type": "string", "maxLength": 2000 },
+        "proyectoAsociadoId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "codigo", "nombreSolicitud", "familia", "tipoTrabajo", "prioridad", "estado"]
+    },
+    "Proyecto": {
+      "title": "Proyecto",
+      "description": "Proyecto de desarrollo técnico e innovación de pastelería",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "codigo": { "type": "string", "maxLength": 64 },
+        "nombre": { "type": "string", "maxLength": 256 },
+        "solicitudOrigenId": { "type": "string", "maxLength": 128 },
+        "descripcion": { "type": "string", "maxLength": 4000 },
+        "familia": { "type": "string", "maxLength": 64 },
+        "subfamilia": { "type": "string", "maxLength": 128 },
+        "tipoProyecto": { "type": "string", "maxLength": 64 },
+        "responsableId": { "type": "string", "maxLength": 128 },
+        "prioridad": { "type": "string", "maxLength": 32 },
+        "fechaInicioPrevista": { "type": "string", "maxLength": 32 },
+        "fechaInicioReal": { "type": "string", "maxLength": 32 },
+        "fechaFinalPrevista": { "type": "string", "maxLength": 32 },
+        "fechaFinalReal": { "type": "string", "maxLength": 32 },
+        "estado": { "type": "string", "maxLength": 64 },
+        "porcentajeAvance": { "type": "number" },
+        "horasEstimadas": { "type": "number" },
+        "resultadoFinal": { "type": "string", "maxLength": 2000 },
+        "fechaCierre": { "type": "string", "maxLength": 32 },
+        "motivoCancelacion": { "type": "string", "maxLength": 1000 },
+        "imagenUrl": { "type": "string", "maxLength": 1024 },
+        "cliente": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "codigo", "nombre", "familia", "tipoProyecto", "estado"]
+    },
+    "Prueba": {
+      "title": "Prueba",
+      "description": "Ensayo técnico o prueba de formulación y cata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "proyectoId": { "type": "string", "maxLength": 128 },
+        "codigo": { "type": "string", "maxLength": 64 },
+        "numeroPrueba": { "type": "number" },
+        "nombrePrueba": { "type": "string", "maxLength": 256 },
+        "fechaRealizacion": { "type": "string", "maxLength": 32 },
+        "responsableId": { "type": "string", "maxLength": 128 },
+        "objetivo": { "type": "string", "maxLength": 2000 },
+        "formulacionNotas": { "type": "string", "maxLength": 2000 },
+        "modificacionesRealizadas": { "type": "string", "maxLength": 3000 },
+        "resultado": { "type": "string", "maxLength": 64 },
+        "incidencias": { "type": "string", "maxLength": 2000 },
+        "proximosAjustes": { "type": "string", "maxLength": 2000 },
+        "fechaValidacion": { "type": "string", "maxLength": 32 },
+        "pruebaAprobada": { "type": "boolean" }
+      },
+      "required": ["id", "proyectoId", "codigo", "nombrePrueba", "resultado"]
+    },
+    "RegistroHoras": {
+      "title": "RegistroHoras",
+      "description": "Imputación de horas de trabajo y ensayos",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "fecha": { "type": "string", "maxLength": 32 },
+        "empleadoId": { "type": "string", "maxLength": 128 },
+        "proyectoId": { "type": "string", "maxLength": 128 },
+        "tarea": { "type": "string", "maxLength": 512 },
+        "pruebaId": { "type": "string", "maxLength": 128 },
+        "tipoActividad": { "type": "string", "maxLength": 64 },
+        "horaInicio": { "type": "string", "maxLength": 16 },
+        "horaFin": { "type": "string", "maxLength": 16 },
+        "tiempoHoras": { "type": "number" },
+        "observaciones": { "type": "string", "maxLength": 1000 }
+      },
+      "required": ["id", "fecha", "empleadoId", "proyectoId", "tipoActividad", "tiempoHoras"]
+    },
+    "Documento": {
+      "title": "Documento",
+      "description": "Ficha técnica, escandallo, briefing u otro documento de pastelería",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nombre": { "type": "string", "maxLength": 256 },
+        "proyectoId": { "type": "string", "maxLength": 128 },
+        "pruebaId": { "type": "string", "maxLength": 128 },
+        "tipoDocumento": { "type": "string", "maxLength": 64 },
+        "fechaCreacion": { "type": "string", "maxLength": 32 },
+        "responsableId": { "type": "string", "maxLength": 128 },
+        "version": { "type": "string", "maxLength": 32 },
+        "formato": { "type": "string", "maxLength": 32 },
+        "url": { "type": "string", "maxLength": 1024 },
+        "tamano": { "type": "string", "maxLength": 64 },
+        "observaciones": { "type": "string", "maxLength": 2000 },
+        "estadoDocumental": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "nombre", "proyectoId", "tipoDocumento", "version", "formato", "estadoDocumental"]
+    },
+    "Empleado": {
+      "title": "Empleado",
+      "description": "Miembro del equipo técnico de I+D+i",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nombre": { "type": "string", "maxLength": 128 },
+        "apellidos": { "type": "string", "maxLength": 128 },
+        "departamento": { "type": "string", "maxLength": 128 },
+        "cargo": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 128 },
+        "horasSemanales": { "type": "number" },
+        "activo": { "type": "boolean" },
+        "avatarUrl": { "type": "string", "maxLength": 1024 }
+      },
+      "required": ["id", "nombre", "apellidos", "cargo", "email"]
+    },
+    "AuditoriaRegistro": {
+      "title": "AuditoriaRegistro",
+      "description": "Log de trazabilidad de cambios en proyectos y ensayos",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "fecha": { "type": "string", "maxLength": 32 },
+        "usuario": { "type": "string", "maxLength": 128 },
+        "entidad": { "type": "string", "maxLength": 64 },
+        "entidadId": { "type": "string", "maxLength": 128 },
+        "entidadCodigo": { "type": "string", "maxLength": 64 },
+        "accion": { "type": "string", "maxLength": 64 },
+        "detalle": { "type": "string", "maxLength": 2000 }
+      },
+      "required": ["id", "fecha", "usuario", "entidad", "entidadId", "accion", "detalle"]
+    }
+  },
+  "firestore": {
+    "/solicitudes/{solicitudId}": {
+      "schema": "Solicitud",
+      "description": "Colección de solicitudes de desarrollo"
+    },
+    "/proyectos/{proyectoId}": {
+      "schema": "Proyecto",
+      "description": "Colección de proyectos de I+D+i"
+    },
+    "/pruebas/{pruebaId}": {
+      "schema": "Prueba",
+      "description": "Colección de ensayos y pruebas técnicas"
+    },
+    "/registrosHoras/{registroId}": {
+      "schema": "RegistroHoras",
+      "description": "Colección de imputaciones de tiempo"
+    },
+    "/documentos/{documentoId}": {
+      "schema": "Documento",
+      "description": "Colección de documentos y fichas técnicas"
+    },
+    "/empleados/{empleadoId}": {
+      "schema": "Empleado",
+      "description": "Colección de miembros del equipo"
+    },
+    "/auditoria/{auditoriaId}": {
+      "schema": "AuditoriaRegistro",
+      "description": "Colección de registros de auditoría y trazabilidad"
+    }
+  }
+}
